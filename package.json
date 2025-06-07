@@ -1,0 +1,31 @@
+{
+  "name": "sports-venue-booking-system-backend",
+  "version": "1.0.0",
+  "description": "This is a backend of sports booking system",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "sports",
+    "venue",
+    "booking",
+    "system",
+    "mongodb",
+    "express",
+    "node"
+  ],
+  "author": "Dibas Poudel",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.15.1"
+  }
+}
