@@ -12,7 +12,7 @@ const app=express();
 
 app.use(cors(
   {
-    origin:  'http://localhost:8000', 
+    origin:  "https://sports-venue-booking-alpha.vercel.app/ ",
     credentials: true, // Allow cookies to be sent with requests
   }
 ));
