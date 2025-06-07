@@ -120,6 +120,24 @@ const logoutUser=asyncHandler(async(req,res)=>{
         .json(new ApiResponse(200, "User logged out successfully"));
 
 });
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find user by ID
+    const user = await User.findById(id).select("-password"); // Exclude password
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 
-export { registerUser, loginUser,logoutUser };
+
+export { registerUser, loginUser,logoutUser,getUserById };
