@@ -21,6 +21,7 @@ const genrateAccessTokenAndRefreshToken = (async (userId) => {
 
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log(email,password)
 
   if (!email || !password) {
     throw new ApiError(400, "Email and password are required");

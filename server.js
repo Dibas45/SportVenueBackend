@@ -14,6 +14,6 @@ await mongoose.connect(process.env.MONGODB_URL)
     console.error("Error connecting to MongoDB:", error);
 });
 
-app.listen(process.env.PORT||8000, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 });
