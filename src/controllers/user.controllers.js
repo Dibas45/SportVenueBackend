@@ -45,7 +45,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure:true,
+    secure: true,         // Must be true when using SameSite: "None"
+    sameSite: 'None',     // Required for cross-site cookies
   };
 
   res
@@ -87,12 +88,12 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure:true,
-
+     secure: true,         // Must be true when using SameSite: "None"
+    sameSite: 'None',     // Required for cross-site cookies
   };
 
   return res
-    .cookie("accessToken", accessToken, options)
+    .cokkie
     .cookie("refreshToken", refreshToken, options)
     .json(
       new ApiResponse(200, {
@@ -120,7 +121,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const options = {
   httpOnly: true,
-  secure:true,
+  secure: true,         // Must be true when using SameSite: "None"
+    sameSite: 'None',     // Required for cross-site cookies
 
 };
 
