@@ -13,6 +13,7 @@ const app=express();
 app.use(cors(
   {
     origin:  "https://sports-venue-booking-alpha.vercel.app",
+    // origin :"http://localhost:5173", This is completely working on my local server
     credentials: true, // Allow cookies to be sent with requests
   }
 ));
@@ -30,7 +31,7 @@ import wishlistRoutes from './src/routes/wishlist.routes.js';
 import reviewRoutes from './src/routes/reviews.routes.js';
 import adminRoutes from "./src/routes/admin.routes.js";
 
-  app.use("/api/v1/users",userRoutes)
+ app.use("/api/v1/users",userRoutes)
 app.use("/api/v1/sports",sportsRoutes)
 app.use("/api/v1/bookings",bookingRoutes)
 app.use("/api/v1/wishlist",wishlistRoutes)
