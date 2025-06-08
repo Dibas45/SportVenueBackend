@@ -104,6 +104,10 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
+  if (!req.user || !req.user._id) {
+    return res.status(401).json(new ApiResponse(401, "Unauthorized"));
+  }
+
   await User.findByIdAndUpdate(
     req.user._id,
     {
@@ -115,6 +119,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "None", // include this if you're using cross-site cookies
   };
 
   return res
@@ -123,6 +128,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, "User logged out successfully"));
 });
+
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
