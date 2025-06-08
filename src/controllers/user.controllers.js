@@ -21,7 +21,6 @@ const genrateAccessTokenAndRefreshToken = (async (userId) => {
 
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log(email,password)
 
   if (!email || !password) {
     throw new ApiError(400, "Email and password are required");
@@ -46,7 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure:true,
-    sameSite: "none",
+    sameSite: "None",
   };
 
   res.status(201)
@@ -89,7 +88,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure:true,
-    sameSite: "none",
+    sameSite: "None",
   };
 
   return res.status(200)
@@ -120,7 +119,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const options = {
   httpOnly: true,
-  sameSite: "none",
+  sameSite: "None",
   secure:true
 };
 

@@ -12,8 +12,8 @@ const app=express();
 
 app.use(cors(
   {
-    origin:  "https://sports-venue-booking-alpha.vercel.app",
-    // origin :"http://localhost:5173", This is completely working on my local server
+    // origin:  "https://sports-venue-booking-alpha.vercel.app",
+    origin :"http://localhost:5173", //This work perfectly on local sever
     credentials: true, // Allow cookies to be sent with requests
   }
 ));

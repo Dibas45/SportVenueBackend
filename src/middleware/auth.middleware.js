@@ -8,6 +8,7 @@ export const verifyJwt = asyncHandler(async (req, res, next) => {
   const token =
     req.cookies?.accessToken ||
     (authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null);
+    console.log(token)
 
   if (!token) {
     throw new ApiError(401, "Access token is required");
