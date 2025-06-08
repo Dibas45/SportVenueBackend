@@ -115,8 +115,6 @@ const logoutUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "Strict", // Added for CSRF protection
-    // Consider adding 'path' if your cookies are scoped to a particular path
   };
 
   return res
