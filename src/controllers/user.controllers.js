@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
+
 const genrateAccessTokenAndRefreshToken = (async (userId) => {
   const user = await User.findById(userId);
   if (!user) {
@@ -49,7 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   };
 
-  res.status(201)
+  res
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
     .json(
@@ -93,7 +94,7 @@ const loginUser = asyncHandler(async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   };
 
-  return res.status(200)
+  return res
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
     .json(
