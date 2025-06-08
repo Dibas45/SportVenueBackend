@@ -93,7 +93,7 @@ const loginUser = asyncHandler(async (req, res) => {
   };
 
   return res
-    .cokkie("accessToken",accessToken,options)
+    .cookie("accessToken",accessToken,options)
     .cookie("refreshToken", refreshToken, options)
     .json(
       new ApiResponse(200, {
