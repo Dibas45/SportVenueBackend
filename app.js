@@ -8,6 +8,19 @@ dotenv.config({
 });
 
 const app=express();
+app.post("/", (req, res) => {
+  const token = "9766509586"; // Replace with real token
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,        // Required for SameSite: 'None'
+    sameSite: "None",    // Cross-site cookie
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+  });
+
+  res.json({ message: "Cookie set!" });
+});
+
 
 
 app.use(cors(
@@ -37,6 +50,8 @@ app.use("/api/v1/bookings",bookingRoutes)
 app.use("/api/v1/wishlist",wishlistRoutes)
 app.use("/api/v1/reviews",reviewRoutes)
 app.use("/api/v1/admin", adminRoutes);
+
+
 
 
 
