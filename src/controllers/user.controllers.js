@@ -98,18 +98,17 @@ const loginUser = asyncHandler(async (req, res) => {
     sameSite: "None",     // ✅ Required for cross-site (Frontend on Vercel, Backend on Render)
   };
 
-     res
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
+  res
+   .cookie("accessToken", accessToken, options)
+   .cookie("refreshToken", refreshToken, options)
     .json(
-      new ApiResponse(200, {
-        message: "User logged in successfully",
+      new ApiResponse(201, {
+        message: "User LoggedIn successfully",
         user: loggedInUser,
         accessToken,
         refreshToken,
       })
-    );
-    
+    );   
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
