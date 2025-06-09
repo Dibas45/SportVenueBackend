@@ -7,7 +7,7 @@ import { getVenueById } from '../controllers/sport_venues.controller.js';
 
 router.get("/:venueId",getVenueById)
 router.get('/:userId', getBookingsByUserId);
-router.post('/', createBooking);
+router.post('/', verifyJwt,createBooking);
 router.patch("/edit/:bookingId", verifyJwt, editBooking);
 router.delete("/delete/:bookingId", verifyJwt, deleteBooking);
 router.post("/check-availability",checkAvailability);
