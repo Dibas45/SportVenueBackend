@@ -98,7 +98,7 @@ const loginUser = asyncHandler(async (req, res) => {
     sameSite: "None",     // ✅ Required for cross-site (Frontend on Vercel, Backend on Render)
   };
 
-  return res
+     res
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
     .json(
@@ -109,6 +109,7 @@ const loginUser = asyncHandler(async (req, res) => {
         refreshToken,
       })
     );
+    
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
