@@ -40,7 +40,7 @@ const fetchGame = asyncHandler(async (req, res) => {
   }
 });
 const getVenueById = asyncHandler(async (req, res) => {
-  const venue = await SportsVenue.findById(req.params.venueId);
+  const venue = await SportVenue.findById(req.params.venueId);
 
   if (!venue) {
     return res.status(404).json(new ApiResponse(404, "Venue not found", null));
