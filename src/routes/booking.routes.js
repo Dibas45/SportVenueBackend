@@ -4,6 +4,7 @@ import { createBooking,editBooking,deleteBooking,getBookingsByUserId, checkAvail
 import { verifyJwt } from '../middleware/auth.middleware.js';
 import { getVenueById } from '../controllers/sport_venues.controller.js';
 // Define the route for creating a booking
+
 router.get("/:venueId",getVenueById)
 router.get('/:userId', getBookingsByUserId);
 router.post('/', createBooking);
