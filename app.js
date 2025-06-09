@@ -8,7 +8,6 @@ dotenv.config({
 });
 
 const app=express();
-router=express.Router();
 
 
 app.use(cors(
