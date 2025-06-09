@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/", fetchAllGames);
 router.get("/:id",fetchGame)
-app.get("/:venueId",getVenueById);
+router.get("/:venueId",getVenueById);
 
 
 export default router;
