@@ -6,7 +6,7 @@ import { getVenueById } from '../controllers/sport_venues.controller.js';
 // Define the route for creating a booking
 
 router.get("/:venueId",getVenueById)
-router.get('/:userId', verifyJwt,getBookingsByUserId);
+router.get('/fetch', verifyJwt,getBookingsByUserId);
 router.post('/', verifyJwt,createBooking);
 router.patch("/edit/:bookingId", verifyJwt, editBooking);
 router.delete("/delete/:bookingId", verifyJwt, deleteBooking);
