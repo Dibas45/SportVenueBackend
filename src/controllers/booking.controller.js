@@ -6,7 +6,7 @@ import  ApiError  from '../utils/ApiError.js';
 const getBookingsByUserId = asyncHandler(async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log("Fetching bookings for user ID:", userId); /
+    console.log("Fetching bookings for user ID:", userId); 
     const bookings = await Booking.find({ userId });
 
     return res.status(200).json(
