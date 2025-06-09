@@ -5,7 +5,7 @@ import  ApiError  from '../utils/ApiError.js';
 
 // Get bookings by user ID
 const getBookingsByUserId = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.user._id;
   const bookings = await Booking.find({ userId });
 
   return res.status(200).json(
