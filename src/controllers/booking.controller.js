@@ -43,9 +43,10 @@ const createBooking = asyncHandler(async (req, res) => {
 });
 
 
-// Edit an existing booking
 const editBooking = asyncHandler(async (req, res) => {
   const { bookingId } = req.params;
+  console.log("Booking ID received in edit:", bookingId); 
+
   const { date, time, name } = req.body;
 
   const booking = await Booking.findById(bookingId);
@@ -62,13 +63,19 @@ const editBooking = asyncHandler(async (req, res) => {
 
 // Delete a booking
 const deleteBooking = asyncHandler(async (req, res) => {
-  const { bookingId } = req.params;
+  try {
+    const { bookingId } = req.params;
+    console.log("Booking ID:", bookingId);
 
-  const booking = await Booking.findById(bookingId);
-  if (!booking) throw new ApiError(404, "Booking not found");
+    const booking = await Booking.findById(bookingId);
+    if (!booking) throw new ApiError(404, "Booking not found");
 
-  await booking.deleteOne();
-  res.status(200).json(new ApiResponse(200, "Booking deleted successfully"));
+    await booking.deleteOne();
+    res.status(200).json(new ApiResponse(200, "Booking deleted successfully"));
+  } catch (err) {
+    console.error("Error in deleteBooking:", err);
+    res.status(500).json({ message: "Internal Server Error", error: err.message });
+  }
 });
 
 // Check venue availability
