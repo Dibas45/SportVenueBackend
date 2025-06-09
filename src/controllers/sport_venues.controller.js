@@ -31,7 +31,7 @@ const fetchGame = asyncHandler(async (req, res) => {
 
     return res
       .status(200)
-      .json(new ApiResponse(200, "Game fetched successfully", game));
+      .json(new ApiResponse(200, "Game fetched successfully", {...game}));
   } catch (error) {
     console.error("Error in fetchGame:", error.message);
     return res
