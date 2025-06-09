@@ -4,6 +4,8 @@ const router = express.Router();
 
 
 // Define the route for fetching games
+
+
 router.get("/", fetchAllGames);
 router.get("/:id",fetchGame)
 

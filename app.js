@@ -35,6 +35,9 @@ import bookingRoutes from './src/routes/booking.routes.js';
 import wishlistRoutes from './src/routes/wishlist.routes.js';
 import reviewRoutes from './src/routes/reviews.routes.js';
 import adminRoutes from "./src/routes/admin.routes.js";
+import { getVenueById } from './src/controllers/sport_venues.controller.js';
+
+app.get("/api/v1/venues/:venueId",getVenueById);
 
  app.use("/api/v1/users",userRoutes)
 app.use("/api/v1/sports",sportsRoutes)

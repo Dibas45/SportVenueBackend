@@ -85,6 +85,18 @@ const createBooking=asyncHandler(async(req, res)=>{
   });
 });
 
+const checkAvailability = asyncHandler(async (req, res) => {
+  const { venueName, date, time } = req.body;
+
+  const existingBooking = await Booking.findOne({ venueName, date, time });
+
+  res.status(200).json({
+    success: true,
+    isAvailable: !existingBooking,
+    message: existingBooking ? "Venue already booked." : "Venue is available.",
+  });
+});
 
 
-export {createBooking,editBooking,deleteBooking};
+
+export {createBooking,editBooking,deleteBooking,checkAvailability,getBookingsByUserId};

@@ -39,6 +39,15 @@ const fetchGame = asyncHandler(async (req, res) => {
       .json(new ApiResponse(500, "Internal server error in fetchGame"));
   }
 });
+const getVenueById = asyncHandler(async (req, res) => {
+  const venue = await SportsVenue.findById(req.params.venueId);
+
+  if (!venue) {
+    return res.status(404).json(new ApiResponse(404, "Venue not found", null));
+  }
+
+  res.status(200).json(new ApiResponse(200, "Venue fetched successfully", { name: venue.name }));
+});
 
 
-export {fetchAllGames,fetchGame}
+export {fetchAllGames,fetchGame,getVenueById}
