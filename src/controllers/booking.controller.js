@@ -20,8 +20,6 @@ const getBookingsByUserId = asyncHandler(async (req, res) => {
 // Create a new booking
 const createBooking = asyncHandler(async (req, res) => {
   const { date, time, name, venueName } = req.body;
-  const {venueID}=req.params;
-
   const userId = req.user._id;
 
   const booking = await Booking.create({
@@ -30,7 +28,6 @@ const createBooking = asyncHandler(async (req, res) => {
     name,
     userId,
     venue_name: venueName, 
-    sportVenueId:venueID
   });
 
   res

@@ -19,11 +19,6 @@ const bookingSchema=new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    sportVenueId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "SportVenue",
-        
-    },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
