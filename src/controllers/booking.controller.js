@@ -21,26 +21,29 @@ const getBookingsByUserId = asyncHandler(async (req, res) => {
 });
 
 
-const createBooking=asyncHandler(async(req, res)=>{
-    const {date, time, name, sportVenueId, userId, venue_name} = req.body;
+const createBooking = asyncHandler(async (req, res) => {
+  const { date, time, name, sportVenueId, venue_name } = req.body;
 
-    const booking = new Booking({
-        date,
-        time,
-        name,
-        sportVenueId,
-        userId,
-        venue_name
-    });
+  const userId = req.user._id; 
 
-    await booking.save();
+  const booking = new Booking({
+    date,
+    time,
+    name,
+    sportVenueId,
+    userId, 
+    venue_name,
+  });
 
-    res.status(201).json({
-        success: true,
-        message: "Booking created successfully",
-        data: booking
-    });
-})
+  await booking.save();
+
+  res.status(201).json({
+    success: true,
+    message: "Booking created successfully",
+    data: booking,
+  });
+});
+
  const editBooking = asyncHandler(async (req, res) => {
   const { bookingId } = req.params;
   const { date, time, name } = req.body;
