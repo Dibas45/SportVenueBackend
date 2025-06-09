@@ -44,7 +44,6 @@ const registerUser = asyncHandler(async (req, res) => {
   const userToReturn = await User.findById(newUser._id).select("-password -refreshToken");
 
   const options = {
-    httpOnly: true,
     secure: true,         // Must be true when using SameSite: "None"
     sameSite: 'None',     // Required for cross-site cookies
   };
@@ -87,7 +86,6 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   const options = {
-    httpOnly: true,
      secure: true,         // Must be true when using SameSite: "None"
     sameSite: 'None',     // Required for cross-site cookies
   };
@@ -120,7 +118,6 @@ const logoutUser = asyncHandler(async (req, res) => {
   );
 
 const options = {
-  httpOnly: true,
   secure: true,         // Must be true when using SameSite: "None"
     sameSite: 'None',     // Required for cross-site cookies
 
