@@ -2,7 +2,9 @@ import express from 'express';
 const router=express.Router();
 import { createBooking,editBooking,deleteBooking,getBookingsByUserId, checkAvailability } from '../controllers/booking.controller.js';
 import { verifyJwt } from '../middleware/auth.middleware.js';
+import { getVenueById } from '../controllers/sport_venues.controller.js';
 // Define the route for creating a booking
+router.get("/:venueId",getVenueById)
 router.get('/:userId', getBookingsByUserId);
 router.post('/', createBooking);
 router.patch("/edit/:bookingId", verifyJwt, editBooking);

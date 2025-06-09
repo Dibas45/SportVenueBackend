@@ -8,6 +8,7 @@ dotenv.config({
 });
 
 const app=express();
+router=express.Router();
 
 
 app.use(cors(
@@ -35,7 +36,7 @@ import bookingRoutes from './src/routes/booking.routes.js';
 import wishlistRoutes from './src/routes/wishlist.routes.js';
 import reviewRoutes from './src/routes/reviews.routes.js';
 import adminRoutes from "./src/routes/admin.routes.js";
-
+import router from './src/routes/sport_venue.routes.js';
 
  app.use("/api/v1/users",userRoutes)
 app.use("/api/v1/sports",sportsRoutes)
