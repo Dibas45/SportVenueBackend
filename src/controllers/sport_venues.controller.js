@@ -22,7 +22,7 @@ const fetchGame=asyncHandler(async (req,res)=>{
     const game=await SportVenue.findById(id)
    return res
    .status(200)
-   .json(new ApiResponse(200,"Game fetched Succesfully",game))
+   .json(new ApiResponse(200,"Game fetched Succesfully",{...game}))
   } catch (error) {
     return res
     .status(500)
