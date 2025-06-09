@@ -1,5 +1,25 @@
 import {asyncHandler} from '../utils/asyncHandler.js';
-import Booking from "../models/booking.model.js"
+import Booking from "../models/booking.model.js";
+import { ApiResponse } from '../utils/ApiResponse.js';
+
+
+
+const getBookingsByUserId = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  const bookings = await Booking.find({ userId });
+
+  if (bookings.length === 0) {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "No bookings found for this user", []));
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Bookings fetched successfully", bookings));
+});
+
 
 const createBooking=asyncHandler(async(req, res)=>{
     const {date, time, name, sportVenueId, userId, venue_name} = req.body;
