@@ -3,8 +3,7 @@ import User from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-
-const genrateAccessTokenAndRefreshToken = (async (userId) => {
+const genrateAccessTokenAndRefreshToken = async (userId) => {
   const user = await User.findById(userId);
   if (!user) {
     throw new ApiError(404, "User not found");
@@ -15,10 +14,9 @@ const genrateAccessTokenAndRefreshToken = (async (userId) => {
 
   user.refreshToken = refreshToken;
   await user.save({ validateBeforeSave: false });
-  
 
   return { accessToken, refreshToken };
-});
+};
 
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -39,13 +37,18 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // Auto-login after registration
-  const { accessToken, refreshToken } = await genrateAccessTokenAndRefreshToken(newUser._id);
+  const { accessToken, refreshToken } = await genrateAccessTokenAndRefreshToken(
+    newUser._id
+  );
 
-  const userToReturn = await User.findById(newUser._id).select("-password -refreshToken");
+  const userToReturn = await User.findById(newUser._id).select(
+    "-password -refreshToken"
+  );
 
   const options = {
-    secure: true,         // Must be true when using SameSite: "None"
-    sameSite: 'None',     // Required for cross-site cookies
+  httpOnly: true,       // ✅ Required for security, NOT blocking HTTPS
+  secure: true,         // ✅ Required because Vercel uses HTTPS
+  sameSite: "None",     // ✅ Required for cross-site (Frontend on Vercel, Backend on Render)
   };
 
   res
@@ -78,20 +81,25 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid password");
   }
 
-  const { accessToken, refreshToken } = await genrateAccessTokenAndRefreshToken(user._id);
+  const { accessToken, refreshToken } = await genrateAccessTokenAndRefreshToken(
+    user._id
+  );
 
-  const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+  const loggedInUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
   if (!loggedInUser) {
     throw new ApiError(404, "User not found");
   }
 
   const options = {
-     secure: true,         // Must be true when using SameSite: "None"
-    sameSite: 'None',     // Required for cross-site cookies
+    httpOnly: true,       // ✅ Required for security, NOT blocking HTTPS
+    secure: true,         // ✅ Required because Vercel uses HTTPS
+    sameSite: "None",     // ✅ Required for cross-site (Frontend on Vercel, Backend on Render)
   };
 
   return res
-    .cookie("accessToken",accessToken,options)
+    .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
     .json(
       new ApiResponse(200, {
@@ -99,7 +107,6 @@ const loginUser = asyncHandler(async (req, res) => {
         user: loggedInUser,
         accessToken,
         refreshToken,
-        
       })
     );
 });
@@ -117,11 +124,11 @@ const logoutUser = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-const options = {
-  secure: true,         // Must be true when using SameSite: "None"
-    sameSite: 'None',     // Required for cross-site cookies
-
-};
+  const options = {
+    httpOnly: true,       // ✅ Required for security, NOT blocking HTTPS
+    secure: true,         // ✅ Required because Vercel uses HTTPS
+    sameSite: "None",     // ✅ Required for cross-site (Frontend on Vercel, Backend on Render)
+  };
 
   return res
     .status(200)
@@ -129,7 +136,6 @@ const options = {
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, "User logged out successfully"));
 });
-
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -149,6 +155,4 @@ const getUserById = async (req, res) => {
   }
 };
 
-
-
-export { registerUser, loginUser,logoutUser,getUserById };
+export { registerUser, loginUser, logoutUser, getUserById };
