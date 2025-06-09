@@ -1,4 +1,5 @@
-import { fetchAllGames, fetchGame } from "../controllers/sport_venues.controller.js";
+import { fetchAllGames, fetchGame ,getVenueById} from "../controllers/sport_venues.controller.js";
+
 import express from "express";
 const router = express.Router();
 
@@ -8,5 +9,7 @@ const router = express.Router();
 
 router.get("/", fetchAllGames);
 router.get("/:id",fetchGame)
+app.get("/:venueId",getVenueById);
+
 
 export default router;
