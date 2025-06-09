@@ -3,19 +3,26 @@ import Booking from '../models/booking.model.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import  ApiError  from '../utils/ApiError.js';
 
-// Get bookings by user ID
 const getBookingsByUserId = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
-  const bookings = await Booking.find({ userId });
+  try {
+    const userId = req.user._id;
+    console.log("Fetching bookings for user ID:", userId); /
+    const bookings = await Booking.find({ userId });
 
-  return res.status(200).json(
-    new ApiResponse(
-      200,
-      bookings.length === 0 ? "No bookings found for this user" : "Bookings fetched successfully",
-      bookings
-    )
-  );
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        bookings.length === 0 ? "No bookings found for this user" : "Bookings fetched successfully",
+        bookings
+      )
+    );
+  } catch (error) {
+    console.error("Error in getBookingsByUserId:", error); 
+    return res.status(500).json({ message: "Server Error", error: error.message });
+  }
 });
+
+
 
 // Create a new booking
 const createBooking = asyncHandler(async (req, res) => {
