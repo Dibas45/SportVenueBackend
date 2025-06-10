@@ -1,7 +1,7 @@
-import Wishlist from "../models/wishlist.model";
-import { asyncHandler } from "../utils/asyncHandler";
-import ApiError from "../utils/ApiError";
-import { ApiResponse } from "../utils/ApiResponse";
+import Wishlist from "../models/wishlist.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import ApiError from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 const getWishlist = asyncHandler(async (req, res) => {
   const userId = req.user.id;
