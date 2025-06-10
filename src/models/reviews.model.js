@@ -16,7 +16,7 @@ const reviewsSchema= new mongoose.Schema({
     comment:{
         type: String,
         required: true,
-        minlength: 5,
+        minlength: 3,
         maxlength: 500
     },
     sportVenueId:{

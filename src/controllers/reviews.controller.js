@@ -38,15 +38,12 @@ const createReview = asyncHandler(async (req, res) => {
 });
 
 const editReview = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
+  const userId = req.user._id; 
   const { reviewId } = req.params;
   const { rating, comment } = req.body;
 
   const review = await Review.findById(reviewId);
-
-  if (!review) {
-    throw new ApiError(404, "Review not found.");
-  }
+  if (!review) throw new ApiError(404, "Review not found.");
 
   if (review.userId.toString() !== userId.toString()) {
     throw new ApiError(403, "You are not authorized to update this review.");
@@ -54,11 +51,10 @@ const editReview = asyncHandler(async (req, res) => {
 
   review.rating = rating || review.rating;
   review.comment = comment || review.comment;
-
   await review.save();
 
   res.status(200).json(new ApiResponse("Review updated successfully", review));
-})
+});
 
 const deleteReview = asyncHandler(async (req, res) => {
   const userId = req.user._id;
