@@ -12,23 +12,27 @@ const getWishlist = asyncHandler(async (req, res) => {
 });
 
 const addToWishlist = asyncHandler(async (req, res) => {
-  const userId = req.user.id;
-  const { venueId } = req.params;
+  try {
+    const userId = req.user.id;
+    const { venueId } = req.params;
 
-  if (!userId || !venueId) throw new ApiError(400, "Missing user or venueId");
+    if (!userId || !venueId) throw new ApiError(400, "Missing user or venueId");
 
-  // Check if already exists
-  const exists = await Wishlist.findOne({ userId, sportVenueId: venueId });
-  if (exists) throw new ApiError(400, "Item already in wishlist");
+    const exists = await Wishlist.findOne({ userId, sportVenueId: venueId });
+    if (exists) throw new ApiError(400, "Item already in wishlist");
 
-  // Create new wishlist item
-  const newItem = new Wishlist({ userId, sportVenueId: venueId });
-  await newItem.save();
+    const newItem = new Wishlist({ userId, sportVenueId: venueId });
+    await newItem.save();
 
-  await newItem.populate('sportVenueId');
+    await newItem.populate('sportVenueId');
 
-  res.status(201).json(new ApiResponse(201, "Added to wishlist", newItem));
+    res.status(201).json(new ApiResponse(201, "Added to wishlist", newItem));
+  } catch (error) {
+    console.error("addToWishlist error:", error);
+    throw error;
+  }
 });
+
 
 const removeFromWishlist = asyncHandler(async (req, res) => {
   const userId = req.user.id;
