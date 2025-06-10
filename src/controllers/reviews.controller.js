@@ -79,6 +79,22 @@ const deleteReview = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse("Review deleted successfully"));
 });
 
+const getReviewsByVenue = asyncHandler(async (req, res) => {
+  const { venue } = req.params;
+
+  if (!venue) {
+    throw new ApiError(400, "Venue ID is required.");
+  }
+
+  const reviews = await Review.find({ sportVenueId: venue }).populate("userId", "email");
+
+  if (!reviews.length) {
+    throw new ApiError(404, "No reviews found for this venue.");
+  }
+
+  res.status(200).json(new ApiResponse("Reviews fetched successfully", reviews));
+});
 
 
-export { createReview,editReview,deleteReview };
+
+export { createReview,editReview,deleteReview ,getReviewsByVenue};
