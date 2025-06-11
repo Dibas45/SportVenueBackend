@@ -2,7 +2,22 @@ import {ApiResponse} from '../utils/ApiResponse.js';
 import {asyncHandler} from '../utils/asyncHandler.js';
 import ApiError from '../utils/ApiError.js';
 import SportVenue from '../models/sport_venues.model.js';
+import Booking from '../models/booking.model.js';
 
+
+const getAdminData =asyncHandler( async (req, res) => {
+  try {
+    const [games, bookings] = await Promise.all([
+      SportVenue.find({}),
+      Booking.find({}),
+    ]);
+
+    res.status(200).json({ games, bookings });
+  } catch (error) {
+    console.error('Error fetching admin data:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
 
 const addGame =asyncHandler(async (req,res)=>{
   const {name,type,price,description,imageUrl} = req.body;
@@ -51,6 +66,43 @@ const editGame = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, "Game deleted successfully"));
 });
 
+// Get all bookings (for admin)
+const getAllBookings = asyncHandler(async (req, res) => {
+  const bookings = await Booking.find().populate("userId", "name email"); // optional population
+
+  res.status(200).json(
+    new ApiResponse(200, "All bookings fetched successfully", bookings)
+  );
+});
+
+// Verify or reject a booking
+const verifyBooking = asyncHandler(async (req, res) => {
+  const { bookingId } = req.params;
+  const { verified } = req.body; // Boolean: true or false
+
+  const booking = await Booking.findById(bookingId);
+  if (!booking) throw new ApiError(404, "Booking not found");
+
+  booking.verified = verified;
+  await booking.save();
+
+  res.status(200).json(
+    new ApiResponse(200, `Booking ${verified ? "verified" : "rejected"} successfully`, booking)
+  );
+});
+
+const deleteBooking = asyncHandler(async (req, res) => {
+  const { bookingId } = req.params;
+
+  const booking = await Booking.findById(bookingId);
+  if (!booking) throw new ApiError(404, "Booking not found");
+
+  await booking.deleteOne();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Booking deleted successfully", bookingId));
+});
 
 
-export {addGame,editGame,deleteGame}
+export {addGame,editGame,deleteGame,getAllBookings,verifyBooking,getAdminData,deleteBooking}
